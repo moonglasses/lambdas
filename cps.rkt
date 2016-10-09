@@ -1,7 +1,8 @@
 #lang racket
 
 (require "util/env.rkt"
-	 "util/misc.rkt")
+	 "util/misc.rkt"
+         "util/cps-utils.rkt")
 
 (struct closure (parameters body env))
 
@@ -45,9 +46,9 @@
                                      (eval-seq (rest e*) env k)))))
 
 (define (evlis e* env k)
-  (k (map (lambda (e)
-            (evalk e env (lambda (x) x)))
-          e*)))
+  (map& (lambda (e k) (evalk e env k))
+        e*
+        k))
 
 (define initial-env
   (make-env
