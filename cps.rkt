@@ -57,3 +57,6 @@
      (* . ,(ref *))
      (equal? . ,(ref equal?))
      (display . ,(ref display)))))
+
+(define initial-cont
+  (lambda (x) x))
